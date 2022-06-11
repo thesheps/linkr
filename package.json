@@ -6,6 +6,7 @@
 		"build": "tsc",
 		"predeploy": "npm run build",
 		"deploy": "cdk deploy '*' --require-approval 'never'",
+		"pretest": "npm run build",
 		"test": "jest"
 	},
 	"dependencies": {
