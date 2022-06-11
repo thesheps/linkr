@@ -73,13 +73,7 @@ test("API Gateway", () => {
 test("Certificate", () => {
 	template.hasResourceProperties("AWS::CertificateManager::Certificate", {
 		DomainName: "linkr.com",
-		DomainValidationOptions: [
-			{
-				DomainName: "linkr.com",
-				ValidationDomain: "linkr.com",
-			},
-		],
-		ValidationMethod: "EMAIL",
+		ValidationMethod: "DNS",
 	});
 });
 
