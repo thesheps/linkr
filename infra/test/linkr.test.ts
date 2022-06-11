@@ -61,6 +61,6 @@ test('Lambda', () => {
 
 describe('API Gateway', () => {
   template.hasResourceProperties("AWS::ApiGateway::RestApi", {
-    Name: "ProxyApi",
+    Name: "linkr-proxy-api",
   });
 });

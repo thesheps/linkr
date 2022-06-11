@@ -9,32 +9,35 @@ export class LinkrStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    const table = new Table(this, 'Hits', {
-      partitionKey: { name: 'path', type: AttributeType.STRING }
+    const table = new Table(this, "Proxy", {
+      partitionKey: { name: "path", type: AttributeType.STRING },
+      tableName: "linkr-entries",
     });
 
-    const dynamoLambda = new Function(this, 'DynamoLambdaHandler', {
+    const dynamoLambda = new Function(this, "DynamoLambdaHandler", {
       runtime: Runtime.NODEJS_12_X,
-      code: Code.fromAsset('build'),
-      handler: 'lambda.handler',
+      code: Code.fromAsset("build"),
+      handler: "lambda.handler",
+      functionName: "linkr-handler",
       environment: {
-        PROXY_TABLE_NAME: table.tableName
-      }
+        PROXY_TABLE_NAME: table.tableName,
+      },
     });
 
     table.grantReadWriteData(dynamoLambda);
 
-    const api = new RestApi(this, 'ProxyApi', {
-      defaultIntegration: new LambdaIntegration(dynamoLambda)
+    const api = new RestApi(this, "ProxyApi", {
+      defaultIntegration: new LambdaIntegration(dynamoLambda),
+      restApiName: "linkr-proxy-api",
     });
 
     const getMethod = new Method(this, "GetMethod", {
       httpMethod: HttpMethod.GET,
-      resource: api.root
-    })
+      resource: api.root,
+    });
 
-    new CfnOutput(this, 'HTTP API Url', {
-      value: api.url ?? 'API URL not found'
+    new CfnOutput(this, "HTTP API Url", {
+      value: api.url ?? "API URL not found",
     });
   }
 }
