@@ -3,9 +3,12 @@ import { Template } from "aws-cdk-lib/assertions";
 
 import { LinkrStack } from "../linkr-stack";
 
-process.env.LINKR_DOMAIN = "linkr.com";
-const stack = new LinkrStack(new App(), "MyTestStack");
-const template = Template.fromStack(stack);
+const template = Template.fromStack(
+	new LinkrStack(new App(), "MyTestStack", {
+		linkrDomainName: "linkr.com",
+		linkrHostedZoneId: "ABCDE",
+	})
+);
 
 test("DynamoDB", () => {
 	template.hasResourceProperties("AWS::DynamoDB::Table", {
@@ -82,7 +85,7 @@ test("Certificate", () => {
 
 test("Route53", () => {
 	template.hasResourceProperties("AWS::Route53::RecordSet", {
-		Name: "linkr.",
+		Name: "linkr.com.",
 		AliasTarget: {},
 	});
 });

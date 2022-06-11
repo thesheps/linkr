@@ -4,16 +4,17 @@ import { Function, Code, Runtime } from "aws-cdk-lib/aws-lambda";
 import { LambdaIntegration, Method, RestApi } from "aws-cdk-lib/aws-apigateway";
 import { HttpMethod } from "aws-cdk-lib/aws-events";
 import { Construct } from "constructs";
-import {
-	ARecord,
-	PublicHostedZone,
-	RecordTarget,
-} from "aws-cdk-lib/aws-route53";
+import { ARecord, HostedZone, RecordTarget } from "aws-cdk-lib/aws-route53";
 import { ApiGateway } from "aws-cdk-lib/aws-route53-targets";
 import { Certificate } from "aws-cdk-lib/aws-certificatemanager";
 
+export type LinkrStackProps = StackProps & {
+	linkrDomainName: string;
+	linkrHostedZoneId: string;
+};
+
 export class LinkrStack extends Stack {
-	constructor(scope: Construct, id: string, props?: StackProps) {
+	constructor(scope: Construct, id: string, props: LinkrStackProps) {
 		super(scope, id, props);
 
 		const table = new Table(this, "Proxy", {
@@ -33,13 +34,12 @@ export class LinkrStack extends Stack {
 
 		table.grantReadWriteData(dynamoLambda);
 
-		const recordName = process.env.LINKR_DOMAIN ?? "";
 		const certificate = new Certificate(this, "ProxyApiCertificate", {
-			domainName: recordName,
+			domainName: props.linkrDomainName,
 		});
 
 		const api = new RestApi(this, "ProxyApi", {
-			domainName: { certificate, domainName: recordName },
+			domainName: { certificate, domainName: props.linkrDomainName },
 			defaultIntegration: new LambdaIntegration(dynamoLambda),
 			restApiName: "linkr-proxy-api",
 		});
@@ -49,8 +49,9 @@ export class LinkrStack extends Stack {
 			resource: api.root,
 		});
 
-		const zone = new PublicHostedZone(this, "LinkrHostedZone", {
-			zoneName: "linkr",
+		const zone = HostedZone.fromHostedZoneAttributes(this, "LinkrHostedZone", {
+			hostedZoneId: props.linkrHostedZoneId,
+			zoneName: props.linkrDomainName,
 		});
 
 		new ARecord(this, "LinkrRecord", {
