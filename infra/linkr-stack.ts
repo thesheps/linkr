@@ -6,7 +6,10 @@ import { HttpMethod } from "aws-cdk-lib/aws-events";
 import { Construct } from "constructs";
 import { ARecord, HostedZone, RecordTarget } from "aws-cdk-lib/aws-route53";
 import { ApiGateway } from "aws-cdk-lib/aws-route53-targets";
-import { Certificate } from "aws-cdk-lib/aws-certificatemanager";
+import {
+	Certificate,
+	CertificateValidation,
+} from "aws-cdk-lib/aws-certificatemanager";
 
 export type LinkrStackProps = StackProps & {
 	linkrDomainName: string;
@@ -36,6 +39,7 @@ export class LinkrStack extends Stack {
 
 		const certificate = new Certificate(this, "ProxyApiCertificate", {
 			domainName: props.linkrDomainName,
+			validation: CertificateValidation.fromDns(),
 		});
 
 		const api = new RestApi(this, "ProxyApi", {
