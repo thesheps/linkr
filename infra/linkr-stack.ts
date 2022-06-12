@@ -62,9 +62,5 @@ export class LinkrStack extends Stack {
 			zone,
 			target: RecordTarget.fromAlias(new ApiGateway(api)),
 		});
-
-		new CfnOutput(this, "HTTP API Url", {
-			value: api.url ?? "API URL not found",
-		});
 	}
 }
