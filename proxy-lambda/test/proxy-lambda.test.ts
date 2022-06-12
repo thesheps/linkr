@@ -1,4 +1,4 @@
-const lambda = require("../proxy-lambda");
+import { handler } from "../proxy-lambda";
 
 jest.mock("aws-sdk");
 global.console.log = jest.fn();
@@ -22,32 +22,28 @@ describe("Proxy Lambda", () => {
 
 	it("Throws an error when misconfigured", async () => {
 		delete process.env.PROXY_TABLE_NAME;
-		const response = await lambda.handler();
+		const response = await handler({});
 
 		expect(response).toEqual({
 			body: "Proxy table not found!",
-			headers: {
-				"Content-Type": "text/html",
-			},
+			headers: { "Content-Type": "text/html" },
 			statusCode: 505,
 		});
 	});
 
 	it("Throws an error when misconfigured", async () => {
 		delete process.env.DEFAULT_REDIRECT;
-		const response = await lambda.handler();
+		const response = await handler({});
 
 		expect(response).toEqual({
 			body: "Default redirect not found!",
-			headers: {
-				"Content-Type": "text/html",
-			},
+			headers: { "Content-Type": "text/html" },
 			statusCode: 505,
 		});
 	});
 
 	it("Updates the hit count for the specified path", async () => {
-		await lambda.handler(testEvent);
+		await handler(testEvent);
 
 		expect(updateItem).toBeCalledWith({
 			ExpressionAttributeValues: { ":incr": { N: "1" } },
@@ -58,12 +54,10 @@ describe("Proxy Lambda", () => {
 	});
 
 	it("Redirects the user to default redirect", async () => {
-		const response = await lambda.handler(testEvent);
+		const response = await handler(testEvent);
 
 		expect(response).toEqual({
-			headers: {
-				Location: defaultRedirect,
-			},
+			headers: { Location: defaultRedirect },
 			statusCode: 301,
 		});
 	});

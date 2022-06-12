@@ -7,7 +7,7 @@
 		"predeploy": "npm run build",
 		"deploy": "cdk deploy '*' --require-approval 'never'",
 		"pretest": "npm run build",
-		"test": "jest"
+		"test": "NODE_OPTIONS=--experimental-vm-modules jest"
 	},
 	"dependencies": {
 		"aws-cdk-lib": "^2.27.0",
