@@ -27,6 +27,7 @@
   "exclude": [
     "cdk.out",
     "infra",
-    "build"
+    "build",
+    "**/test"
   ]
 }
