@@ -164,8 +164,9 @@ describe("Configured environment", () => {
 
 describe("Unconfigured environment", () => {
 	it("Throws an error", () => {
-		delete process.env.PROXY_TABLE_NAME;
-		delete process.env.DEFAULT_REDIRECT;
+		delete process.env.LINKR_DOMAIN;
+		delete process.env.LINKR_DEFAULT_REDIRECT;
+		delete process.env.LINKR_HOSTED_ZONE_ID;
 
 		const func = () => require("../linkr");
 		expect(func).toThrowError("Environment not configured!");
