@@ -5,7 +5,8 @@ export const handler = async function (event: any) {
 	if (!tableName) return sendResponse(505, "Proxy table not found!");
 
 	return {
-		body: "Looks like I'm working, right?",
+		body: "I am working",
+		headers: { "Content-Type": "application/json" },
 		statusCode: 200,
 	};
 };

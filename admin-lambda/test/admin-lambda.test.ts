@@ -18,7 +18,8 @@ describe("Admin Lambda", () => {
 		const response = await handler({});
 
 		expect(response).toEqual({
-			body: "Looks like I'm working, right?",
+			body: "I am working",
+			headers: { "Content-Type": "application/json" },
 			statusCode: 200,
 		});
 	});
