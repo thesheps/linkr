@@ -8,7 +8,7 @@ const props: LinkrStackProps = {
 	defaultRedirect: process.env.LINKR_DEFAULT_REDIRECT ?? "",
 };
 
-if (!Object.values(props).every((p) => !!p))
+if (!Object.values(props).every((p) => p !== ""))
 	throw new Error("Environment not configured!");
 
 new LinkrStack(new App(), "Linkr", {
