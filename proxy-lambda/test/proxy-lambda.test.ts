@@ -1,6 +1,7 @@
 const lambda = require("../proxy-lambda");
 
 jest.mock("aws-sdk");
+global.console.log = jest.fn();
 
 const testEvent = { requestContext: { path: "/beans" } };
 const updateItem = jest.fn().mockReturnValue({ promise: jest.fn() });
