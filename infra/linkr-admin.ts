@@ -43,14 +43,12 @@ export class LinkrAdmin extends Construct {
 
 		api.root.addProxy({ defaultIntegration });
 
-		const apiKeyValue = new Secret(this, "ApiKeyValue", {
-			secretName: "linkr-api-key",
-		});
+		const secretName = "linkr-api-key";
+		const secret = new Secret(this, "ApiKeySecret", { secretName });
 
 		api.addApiKey("ApiKey", {
-			apiKeyName: "Api-Key",
-			defaultCorsPreflightOptions: { allowOrigins: ["*"] },
-			value: apiKeyValue.secretValue.toJSON(),
+			apiKeyName: `Api-Key`,
+			value: secret.secretValueFromJson(secretName).toString(),
 		});
 
 		new ARecord(this, "ProxyARecord", {
