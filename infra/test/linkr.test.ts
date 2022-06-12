@@ -135,6 +135,10 @@ describe("Configured environment", () => {
 				HttpMethod: "ANY",
 				ApiKeyRequired: true,
 			});
+
+			template.hasResourceProperties("AWS::ApiGateway::UsagePlanKey", {
+				KeyType: "API_KEY",
+			});
 		});
 
 		test("Route53", () => {

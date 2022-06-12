@@ -61,10 +61,21 @@ export class LinkrAdmin extends Construct {
 			},
 		});
 
-		api.addApiKey("ApiKey", {
-			apiKeyName: "Api-Key",
+		const apiKey = api.addApiKey("ApiKey", {
+			apiKeyName: "default",
 			value: secret.secretValueFromJson("key").toString(),
 		});
+
+		const usagePlan = api.addUsagePlan("ApiKeyUsage", {
+			apiStages: [
+				{
+					api,
+					stage: api.deploymentStage,
+				},
+			],
+		});
+
+		usagePlan.addApiKey(apiKey);
 
 		new ARecord(this, "ProxyARecord", {
 			recordName: "api",
