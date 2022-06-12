@@ -128,6 +128,7 @@ describe("Configured environment", () => {
 		test("API Gateway", () => {
 			template.hasResourceProperties("AWS::ApiGateway::RestApi", {
 				Name: "linkr-admin-api",
+				ApiKeySourceType: "HEADER",
 			});
 		});
 

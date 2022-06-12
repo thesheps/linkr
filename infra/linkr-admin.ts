@@ -1,5 +1,9 @@
 import { Function, Code, Runtime } from "aws-cdk-lib/aws-lambda";
-import { LambdaIntegration, RestApi } from "aws-cdk-lib/aws-apigateway";
+import {
+	ApiKeySourceType,
+	LambdaIntegration,
+	RestApi,
+} from "aws-cdk-lib/aws-apigateway";
 import { ARecord, IHostedZone, RecordTarget } from "aws-cdk-lib/aws-route53";
 import { ApiGateway } from "aws-cdk-lib/aws-route53-targets";
 import { Certificate } from "aws-cdk-lib/aws-certificatemanager";
@@ -39,16 +43,23 @@ export class LinkrAdmin extends Construct {
 			},
 			restApiName: "linkr-admin-api",
 			defaultIntegration,
+			apiKeySourceType: ApiKeySourceType.HEADER,
 		});
 
 		api.root.addProxy({ defaultIntegration });
 
-		const secretName = "linkr-api-key";
-		const secret = new Secret(this, "ApiKeySecret", { secretName });
+		const secret = new Secret(this, "Secret", {
+			secretName: "linkr-api-key",
+			generateSecretString: {
+				generateStringKey: "key",
+				secretStringTemplate: JSON.stringify({}),
+				excludeCharacters: " %+~`#$&*()|[]{}:;<>?!'/@\"\\",
+			},
+		});
 
 		api.addApiKey("ApiKey", {
-			apiKeyName: `Api-Key`,
-			value: secret.secretValueFromJson(secretName).toString(),
+			apiKeyName: "Api-Key",
+			value: secret.secretValueFromJson("key").toString(),
 		});
 
 		new ARecord(this, "ProxyARecord", {
