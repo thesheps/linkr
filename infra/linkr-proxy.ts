@@ -27,7 +27,10 @@ export class LinkrProxy extends Construct {
 			code: Code.fromAsset("build"),
 			handler: "proxy-lambda.handler",
 			functionName: "linkr-proxy-handler",
-			environment: { PROXY_TABLE_NAME: table.tableName },
+			environment: {
+				PROXY_TABLE_NAME: table.tableName,
+				DEFAULT_REDIRECT: props.defaultRedirect,
+			},
 		});
 
 		table.grantReadWriteData(dynamoLambda);

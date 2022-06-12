@@ -22,18 +22,14 @@ exports.handler = async function (event: any) {
 
 	return {
 		statusCode: 301,
-		headers: {
-			Location: defaultRedirect,
-		},
+		headers: { Location: defaultRedirect },
 	};
 };
 
 const sendResponse = (status: number, body: string) => {
 	var response = {
 		statusCode: status,
-		headers: {
-			"Content-Type": "text/html",
-		},
+		headers: { "Content-Type": "text/html" },
 		body: body,
 	};
 

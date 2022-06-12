@@ -11,6 +11,7 @@ import { LinkrProxy } from "./linkr-proxy";
 export type LinkrStackProps = StackProps & {
 	linkrDomainName: string;
 	linkrHostedZoneId: string;
+	defaultRedirect: string;
 };
 
 export class LinkrStack extends Stack {
