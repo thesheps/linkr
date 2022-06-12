@@ -1,17 +1,17 @@
 import { App, LegacyStackSynthesizer } from "aws-cdk-lib";
 
-import { LinkrStack } from "./linkr-stack";
+import { LinkrStack, LinkrStackProps } from "./linkr-stack";
 
-const linkrDomainName = process.env.LINKR_DOMAIN ?? "";
-const linkrHostedZoneId = process.env.LINKR_HOSTED_ZONE_ID ?? "";
-const defaultRedirect = process.env.DEFAULT_REDIRECT ?? "";
+const props: LinkrStackProps = {
+	linkrDomainName: process.env.LINKR_DOMAIN ?? "",
+	linkrHostedZoneId: process.env.LINKR_HOSTED_ZONE_ID ?? "",
+	defaultRedirect: process.env.DEFAULT_REDIRECT ?? "",
+};
 
-if (!linkrDomainName || !linkrHostedZoneId || !defaultRedirect)
+if (!Object.values(props).every((p) => p))
 	throw new Error("Environment not configured!");
 
 new LinkrStack(new App(), "Linkr", {
-	linkrDomainName,
-	linkrHostedZoneId,
-	defaultRedirect,
+	...props,
 	synthesizer: new LegacyStackSynthesizer(),
 });
