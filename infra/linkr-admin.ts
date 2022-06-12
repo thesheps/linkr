@@ -20,7 +20,7 @@ export class LinkrAdmin extends Construct {
 
 		const lambda = new Function(this, "ProxyLambdaHandler", {
 			runtime: Runtime.NODEJS_12_X,
-			code: Code.fromAsset("build"),
+			code: Code.fromAsset("build/admin-lambda"),
 			handler: "admin-lambda.handler",
 			functionName: "linkr-admin-handler",
 			environment: {

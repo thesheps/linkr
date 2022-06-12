@@ -20,7 +20,7 @@ export class LinkrProxy extends Construct {
 
 		const lambda = new Function(this, "ProxyLambdaHandler", {
 			runtime: Runtime.NODEJS_12_X,
-			code: Code.fromAsset("build"),
+			code: Code.fromAsset("build/proxy-lambda"),
 			handler: "proxy-lambda.handler",
 			functionName: "linkr-proxy-handler",
 			environment: {
