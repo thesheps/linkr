@@ -26,7 +26,8 @@ export class LinkrStack extends Stack {
 		});
 
 		const certificate = new Certificate(this, "LinkrCertificate", {
-			domainName: `*.${props.linkrDomainName}`,
+			domainName: props.linkrDomainName,
+			subjectAlternativeNames: [`*.${props.linkrDomainName}`],
 			validation: CertificateValidation.fromDns(),
 		});
 
