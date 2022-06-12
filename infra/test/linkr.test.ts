@@ -7,6 +7,7 @@ const template = Template.fromStack(
 	new LinkrStack(new App(), "MyTestStack", {
 		linkrDomainName: "linkr.com",
 		linkrHostedZoneId: "ABCDE",
+		defaultRedirect: "https://www.linkr.com",
 	})
 );
 
