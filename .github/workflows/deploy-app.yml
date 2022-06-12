@@ -23,4 +23,4 @@ jobs:
       - run: npm ci
       - run: npm t
       - run: npm run deploy
-      - run: npm run smoke:test
+      - run: npm run test:smoke
