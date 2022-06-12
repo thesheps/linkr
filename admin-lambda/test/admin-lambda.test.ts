@@ -1,19 +1,16 @@
-import { handler } from "../api-lambda";
+import { handler } from "../admin-lambda";
 
 jest.mock("aws-sdk");
 global.console.log = jest.fn();
 
 const proxyTable = "beans-on-toast";
-const defaultRedirect = "default-redirect.com";
 const updateItem = jest.fn().mockReturnValue({ promise: jest.fn() });
 
-describe("API Lambda", () => {
+describe("Admin Lambda", () => {
 	const { DynamoDB } = require("aws-sdk");
 
 	beforeEach(() => {
 		process.env.PROXY_TABLE_NAME = proxyTable;
-		process.env.DEFAULT_REDIRECT = defaultRedirect;
-
 		DynamoDB.mockImplementation(() => ({ updateItem }));
 	});
 

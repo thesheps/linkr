@@ -7,6 +7,8 @@ import {
 } from "aws-cdk-lib/aws-certificatemanager";
 
 import { LinkrProxy } from "./linkr-proxy";
+import { LinkrAdmin } from "./linkr-admin";
+import { AttributeType, Table } from "aws-cdk-lib/aws-dynamodb";
 
 export type LinkrStackProps = StackProps & {
 	linkrDomainName: string;
@@ -23,15 +25,28 @@ export class LinkrStack extends Stack {
 			zoneName: props.linkrDomainName,
 		});
 
-		const certificate = new Certificate(this, "ProxyApiCertificate", {
+		const certificate = new Certificate(this, "LinkrCertificate", {
 			domainName: props.linkrDomainName,
 			validation: CertificateValidation.fromDns(),
+		});
+
+		const table = new Table(this, "LinkrTable", {
+			partitionKey: { name: "path", type: AttributeType.STRING },
+			tableName: "linkr-entries",
 		});
 
 		new LinkrProxy(this, {
 			...props,
 			certificate,
 			zone,
+			table,
+		});
+
+		new LinkrAdmin(this, {
+			...props,
+			certificate,
+			zone,
+			table,
 		});
 	}
 }

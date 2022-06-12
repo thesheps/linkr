@@ -21,16 +21,16 @@ export const handler = async function (event: any) {
 		.promise();
 
 	return {
-		statusCode: 301,
 		headers: { Location: defaultRedirect },
+		statusCode: 301,
 	};
 };
 
 const sendResponse = (status: number, body: string) => {
 	var response = {
-		statusCode: status,
-		headers: { "Content-Type": "text/html" },
 		body: body,
+		headers: { "Content-Type": "text/html" },
+		statusCode: status,
 	};
 
 	return response;
