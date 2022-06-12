@@ -1,8 +1,8 @@
 import { App, LegacyStackSynthesizer } from "aws-cdk-lib";
 
-import { LinkrStack, LinkrStackProps } from "./linkr-stack";
+import { LinkrStack } from "./linkr-stack";
 
-const props: LinkrStackProps = {
+const props = {
 	linkrDomainName: process.env.LINKR_DOMAIN ?? "",
 	linkrHostedZoneId: process.env.LINKR_HOSTED_ZONE_ID ?? "",
 	defaultRedirect: process.env.LINKR_DEFAULT_REDIRECT ?? "",
