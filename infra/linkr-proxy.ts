@@ -1,10 +1,11 @@
 import { AttributeType, Table } from "aws-cdk-lib/aws-dynamodb";
 import { Function, Code, Runtime } from "aws-cdk-lib/aws-lambda";
 import { LambdaIntegration, RestApi } from "aws-cdk-lib/aws-apigateway";
-import { Construct } from "constructs";
 import { ARecord, IHostedZone, RecordTarget } from "aws-cdk-lib/aws-route53";
 import { ApiGateway } from "aws-cdk-lib/aws-route53-targets";
 import { Certificate } from "aws-cdk-lib/aws-certificatemanager";
+import { Construct } from "constructs";
+
 import { LinkrStackProps } from "./linkr-stack";
 
 export type LinkrProxyProps = LinkrStackProps & {

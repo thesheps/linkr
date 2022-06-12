@@ -1,10 +1,11 @@
 import { Stack, StackProps } from "aws-cdk-lib";
-import { Construct } from "constructs";
 import { HostedZone } from "aws-cdk-lib/aws-route53";
+import { Construct } from "constructs";
 import {
 	Certificate,
 	CertificateValidation,
 } from "aws-cdk-lib/aws-certificatemanager";
+
 import { LinkrProxy } from "./linkr-proxy";
 
 export type LinkrStackProps = StackProps & {
