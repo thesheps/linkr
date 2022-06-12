@@ -44,13 +44,11 @@ export class LinkrStack extends Stack {
 
 		const api = new RestApi(this, "ProxyApi", {
 			domainName: { certificate, domainName: props.linkrDomainName },
-			defaultIntegration: new LambdaIntegration(dynamoLambda),
 			restApiName: "linkr-proxy-api",
 		});
 
-		const getMethod = new Method(this, "GetMethod", {
-			httpMethod: HttpMethod.GET,
-			resource: api.root,
+		api.root.addProxy({
+			defaultIntegration: new LambdaIntegration(dynamoLambda),
 		});
 
 		const zone = HostedZone.fromHostedZoneAttributes(this, "LinkrHostedZone", {
