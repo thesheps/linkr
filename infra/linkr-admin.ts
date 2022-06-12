@@ -43,10 +43,14 @@ export class LinkrAdmin extends Construct {
 			},
 			restApiName: "linkr-admin-api",
 			defaultIntegration,
+			defaultMethodOptions: { apiKeyRequired: true },
 			apiKeySourceType: ApiKeySourceType.HEADER,
 		});
 
-		api.root.addProxy({ defaultIntegration });
+		api.root.addProxy({
+			defaultIntegration,
+			defaultMethodOptions: { apiKeyRequired: true },
+		});
 
 		const secret = new Secret(this, "Secret", {
 			secretName: "linkr-api-key",

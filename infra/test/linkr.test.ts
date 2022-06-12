@@ -130,6 +130,11 @@ describe("Configured environment", () => {
 				Name: "linkr-admin-api",
 				ApiKeySourceType: "HEADER",
 			});
+
+			template.hasResourceProperties("AWS::ApiGateway::Method", {
+				HttpMethod: "ANY",
+				ApiKeyRequired: true,
+			});
 		});
 
 		test("Route53", () => {
