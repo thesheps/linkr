@@ -8,7 +8,7 @@ Welcome! Grab a seat and sit yourself down, you look like you've had a long day!
 
 ## Reasoning
 
-There already exists a load of different URL shorteners online that you can use for free. So why, then, should we spend time trying to set up and host our own?
+There are already a load of different URL shorteners online that you can use for free. So why, then, should we spend time trying to set up and host our own?
 
 It all comes down to **ownership**. If you already own your own website, your own data; why stop there? If your favourite shortener goes out of business it could theoretically pull the plug on your content and existing syndication! Having your own shortener in place is another step towards a "free" internet, one that minimizes rather than amplifies user's dependencies on Corporations.
 

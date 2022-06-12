@@ -8,4 +8,4 @@ This page provides the living documentation for the Linkr repository. All ADR (A
 
 ## ADRs
 
-[0001 - 1. Use serverless technologies](./adr/0001-use-serverless-technologies.md)
+[0001 - Use serverless technologies](./adr/0001-use-serverless-technologies.md)
