@@ -3,6 +3,10 @@ const { DynamoDB, Lambda } = require("aws-sdk");
 exports.handler = async function (event: any) {
 	console.log("request:", JSON.stringify(event, undefined, 2));
 
+	const TableName = process.env.PROXY_TABLE_NAME;
+
+	if (!TableName) return sendResponse(505, "Proxy table not found!");
+
 	const dynamo = new DynamoDB();
 
 	await dynamo
@@ -14,10 +18,10 @@ exports.handler = async function (event: any) {
 		})
 		.promise();
 
-	return sendRes(200, "You have connected with the Lambda!");
+	return sendResponse(200, "You have connected with the Lambda!");
 };
 
-const sendRes = (status: number, body: string) => {
+const sendResponse = (status: number, body: string) => {
 	var response = {
 		statusCode: status,
 		headers: {
