@@ -8,6 +8,8 @@ const props = {
 	defaultRedirect: process.env.LINKR_DEFAULT_REDIRECT ?? "",
 };
 
+console.log(props);
+
 if (!Object.values(props).every((p) => p !== ""))
 	throw new Error("Environment not configured!");
 
