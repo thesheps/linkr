@@ -35,9 +35,8 @@ describe("Configured environment", () => {
 
 	test("Certificate", () => {
 		template.hasResourceProperties("AWS::CertificateManager::Certificate", {
-			DomainName: "linkr.com",
+			DomainName: "*.linkr.com",
 			ValidationMethod: "DNS",
-			SubjectAlternativeNames: ["api", "www"],
 		});
 	});
 
