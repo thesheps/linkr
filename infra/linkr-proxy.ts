@@ -31,17 +31,17 @@ export class LinkrProxy extends Construct {
 
 		table.grantReadWriteData(dynamoLambda);
 
+		const defaultIntegration = new LambdaIntegration(dynamoLambda);
 		const api = new RestApi(this, "ProxyApi", {
 			domainName: {
 				certificate: props.certificate,
 				domainName: props.linkrDomainName,
 			},
 			restApiName: "linkr-proxy-api",
+			defaultIntegration,
 		});
 
-		api.root.addProxy({
-			defaultIntegration: new LambdaIntegration(dynamoLambda),
-		});
+		api.root.addProxy({ defaultIntegration });
 
 		new ARecord(this, "ProxyARecord", {
 			zone: props.zone,
