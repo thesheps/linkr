@@ -137,6 +137,18 @@ describe("Configured environment", () => {
 				AliasTarget: {},
 			});
 		});
+
+		test("Api-Key Configuration", () => {
+			template.hasResourceProperties("AWS::ApiGateway::ApiKey", {
+				Name: "Api-Key",
+				Enabled: true,
+			});
+
+			template.hasResourceProperties("AWS::SecretsManager::Secret", {
+				Name: "linkr-api-key",
+				GenerateSecretString: {},
+			});
+		});
 	});
 });
 
