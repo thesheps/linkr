@@ -5,7 +5,7 @@
 		"cdk": "env-cmd cdk",
 		"build": "tsc",
 		"predeploy": "npm run build",
-		"deploy": "env-cmd cdk deploy '*' --require-approval 'never'",
+		"deploy": "cdk deploy '*' --require-approval 'never'",
 		"pretest": "npm run build",
 		"test": "NODE_OPTIONS=--experimental-vm-modules jest"
 	},
