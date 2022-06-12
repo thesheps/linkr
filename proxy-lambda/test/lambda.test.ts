@@ -1,4 +1,4 @@
-const lambda = require("../lambda");
+const lambda = require("../proxy-lambda");
 
 jest.mock("aws-sdk");
 

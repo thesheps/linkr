@@ -60,7 +60,7 @@ describe("Configured environment", () => {
 
 	test("Lambda", () => {
 		template.hasResourceProperties("AWS::Lambda::Function", {
-			Handler: "lambda.handler",
+			Handler: "proxy-lambda.handler",
 			Runtime: "nodejs12.x",
 		});
 	});

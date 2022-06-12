@@ -24,7 +24,7 @@ export class LinkrProxy extends Construct {
 		const dynamoLambda = new Function(this, "ProxyLambdaHandler", {
 			runtime: Runtime.NODEJS_12_X,
 			code: Code.fromAsset("build"),
-			handler: "lambda.handler",
+			handler: "proxy-lambda.handler",
 			functionName: "linkr-proxy-handler",
 			environment: { PROXY_TABLE_NAME: table.tableName },
 		});
