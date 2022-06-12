@@ -44,8 +44,7 @@ describe("Configured environment", () => {
 	describe("Proxy Api", () => {
 		test("DynamoDB Read/Write IAM Policy", () => {
 			template.hasResourceProperties("AWS::IAM::Policy", {
-				PolicyName:
-					"LinkrProxyProxyLambdaHandlerServiceRoleDefaultPolicy188BE9B2",
+				PolicyName: "LinkrProxyLambdaHandlerServiceRoleDefaultPolicy0623CCF2",
 				PolicyDocument: {
 					Statement: [
 						{
@@ -94,8 +93,7 @@ describe("Configured environment", () => {
 	describe("Admin Api", () => {
 		test("DynamoDB Read/Write IAM Policy", () => {
 			template.hasResourceProperties("AWS::IAM::Policy", {
-				PolicyName:
-					"LinkrAdminProxyLambdaHandlerServiceRoleDefaultPolicy8C68756A",
+				PolicyName: "LinkrProxyLambdaHandlerServiceRoleDefaultPolicy0623CCF2",
 				PolicyDocument: {
 					Statement: [
 						{

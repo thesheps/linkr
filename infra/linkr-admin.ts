@@ -4,6 +4,7 @@ import { ARecord, IHostedZone, RecordTarget } from "aws-cdk-lib/aws-route53";
 import { ApiGateway } from "aws-cdk-lib/aws-route53-targets";
 import { Certificate } from "aws-cdk-lib/aws-certificatemanager";
 import { Table } from "aws-cdk-lib/aws-dynamodb";
+import { Secret } from "aws-cdk-lib/aws-secretsmanager";
 import { Construct } from "constructs";
 
 import { LinkrStackProps } from "./linkr-stack";
@@ -18,7 +19,7 @@ export class LinkrAdmin extends Construct {
 	constructor(scope: Construct, props: LinkrAdminProps) {
 		super(scope, "LinkrAdmin");
 
-		const lambda = new Function(this, "ProxyLambdaHandler", {
+		const lambda = new Function(this, "Lambda", {
 			runtime: Runtime.NODEJS_12_X,
 			code: Code.fromAsset("build/admin-lambda"),
 			handler: "admin-lambda.handler",
@@ -31,7 +32,7 @@ export class LinkrAdmin extends Construct {
 		props.table.grantReadWriteData(lambda);
 
 		const defaultIntegration = new LambdaIntegration(lambda);
-		const api = new RestApi(this, "AdminApi", {
+		const api = new RestApi(this, "RestApi", {
 			domainName: {
 				certificate: props.certificate,
 				domainName: `api.${props.linkrDomainName}`,
@@ -41,6 +42,13 @@ export class LinkrAdmin extends Construct {
 		});
 
 		api.root.addProxy({ defaultIntegration });
+
+		const apiKeyValue = new Secret(this, "ApiKeyValue");
+		api.addApiKey("ApiKey", {
+			apiKeyName: "Api-Key",
+			defaultCorsPreflightOptions: { allowOrigins: ["*"] },
+			value: apiKeyValue.secretValue.toJSON(),
+		});
 
 		new ARecord(this, "ProxyARecord", {
 			recordName: "api",

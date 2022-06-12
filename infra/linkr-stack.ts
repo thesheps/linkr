@@ -20,18 +20,18 @@ export class LinkrStack extends Stack {
 	constructor(scope: Construct, id: string, props: LinkrStackProps) {
 		super(scope, id, props);
 
-		const zone = HostedZone.fromHostedZoneAttributes(this, "LinkrHostedZone", {
+		const zone = HostedZone.fromHostedZoneAttributes(this, "HostedZone", {
 			hostedZoneId: props.linkrHostedZoneId,
 			zoneName: props.linkrDomainName,
 		});
 
-		const certificate = new Certificate(this, "LinkrCertificate", {
+		const certificate = new Certificate(this, "Certificate", {
 			domainName: props.linkrDomainName,
 			subjectAlternativeNames: [`*.${props.linkrDomainName}`],
 			validation: CertificateValidation.fromDns(),
 		});
 
-		const table = new Table(this, "LinkrTable", {
+		const table = new Table(this, "DynamoTable", {
 			partitionKey: { name: "path", type: AttributeType.STRING },
 			tableName: "linkr-entries",
 		});

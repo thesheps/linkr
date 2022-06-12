@@ -18,7 +18,7 @@ export class LinkrProxy extends Construct {
 	constructor(scope: Construct, props: LinkrProxyProps) {
 		super(scope, "LinkrProxy");
 
-		const lambda = new Function(this, "ProxyLambdaHandler", {
+		const lambda = new Function(this, "LambdaHandler", {
 			runtime: Runtime.NODEJS_12_X,
 			code: Code.fromAsset("build/proxy-lambda"),
 			handler: "proxy-lambda.handler",
@@ -32,7 +32,7 @@ export class LinkrProxy extends Construct {
 		props.table.grantReadWriteData(lambda);
 
 		const defaultIntegration = new LambdaIntegration(lambda);
-		const api = new RestApi(this, "ProxyApi", {
+		const api = new RestApi(this, "RestApi", {
 			domainName: {
 				certificate: props.certificate,
 				domainName: props.linkrDomainName,
