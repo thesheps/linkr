@@ -150,7 +150,7 @@ describe("Configured environment", () => {
 
 		test("Api-Key Configuration", () => {
 			template.hasResourceProperties("AWS::ApiGateway::ApiKey", {
-				Name: "Api-Key",
+				Name: "default",
 				Enabled: true,
 			});
 
