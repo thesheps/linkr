@@ -1,11 +1,21 @@
+import shorten from "./shorten";
+
 export const handler = async function (event: any) {
 	console.log("request:", JSON.stringify(event, undefined, 2));
 
-	const tableName = process.env.PROXY_TABLE_NAME;
+	if (event.path !== "/entries") return { statusCode: 404 };
+
+	const tableName = process.env.LINKR_PROXY_TABLE_NAME;
 	if (!tableName) return sendResponse(505, "Proxy table not found!");
 
+	const urlBase = process.env.LINKR_PROXY_BASE_URL;
+	if (!urlBase) return sendResponse(505, "Base URL not found!");
+
+	const body = JSON.parse(event.body);
+	const shortUrl = shorten(body.longUrl, urlBase);
+
 	return {
-		body: "I am working",
+		body: JSON.stringify({ shortUrl }),
 		headers: { "Content-Type": "application/json" },
 		statusCode: 200,
 	};
@@ -14,7 +24,6 @@ export const handler = async function (event: any) {
 const sendResponse = (status: number, body: string) => {
 	var response = {
 		body: body,
-		headers: { "Content-Type": "text/html" },
 		statusCode: status,
 	};
 
