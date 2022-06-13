@@ -11,6 +11,20 @@ export const handler = async function (event: any) {
 
 	const dynamo = new DynamoDB();
 
+	const entry = await dynamo
+		.getItem({
+			TableName: tableName,
+			Key: { shortUrl: { S: event.path } },
+		})
+		.promise();
+
+	if (!entry.Item) {
+		return {
+			headers: { Location: defaultRedirect },
+			statusCode: 301,
+		};
+	}
+
 	await dynamo
 		.updateItem({
 			TableName: tableName,
@@ -21,7 +35,7 @@ export const handler = async function (event: any) {
 		.promise();
 
 	return {
-		headers: { Location: defaultRedirect },
+		headers: { Location: entry.Item.longUrl.S },
 		statusCode: 301,
 	};
 };

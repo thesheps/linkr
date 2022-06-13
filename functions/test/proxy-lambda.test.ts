@@ -3,6 +3,11 @@ import { handler } from "../proxy-lambda";
 jest.mock("aws-sdk");
 global.console.log = jest.fn();
 
+const longUrl = "https://www.big-url.com/my-lovely-path";
+const item = { Item: { longUrl: { S: longUrl } } };
+const getItem = jest
+	.fn()
+	.mockReturnValue({ promise: jest.fn().mockResolvedValue(item) });
 const updateItem = jest.fn().mockReturnValue({ promise: jest.fn() });
 const proxyTable = "beans-on-toast";
 const defaultRedirect = "default-redirect.com";
@@ -16,6 +21,7 @@ describe("Proxy Lambda", () => {
 		process.env.LINKR_DEFAULT_REDIRECT = defaultRedirect;
 
 		DynamoDB.mockImplementation(() => ({
+			getItem,
 			updateItem,
 		}));
 	});
@@ -57,7 +63,7 @@ describe("Proxy Lambda", () => {
 		const response = await handler(testEvent);
 
 		expect(response).toEqual({
-			headers: { Location: defaultRedirect },
+			headers: { Location: longUrl },
 			statusCode: 301,
 		});
 	});
