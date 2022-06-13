@@ -20,21 +20,21 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16.x
-      - name: Install Lambda dependencies
-        working-directory: ./functions
+      - name: Install Lambda dependencies 📦
+        working-directory: functions
         run: npm ci
-      - name: Run Lambda tests
-        working-directory: ./functions
+      - name: Run Lambda tests 🧪
+        working-directory: functions
         run: npm t
-      - name: Install Infra dependencies
-        working-directory: ./infra
+      - name: Install Infra dependencies 📦
+        working-directory: infra
         run: npm ci
-      - name: Run Infra tests
-        working-directory: ./infra
+      - name: Run Infra tests 🧪
+        working-directory: infra
         run: npm t
-      - name: Deploy
-        working-directory: ./infra
+      - name: Deploy 🚀
+        working-directory: infra
         run: npm run deploy
-      - name: Run smoke tests
-        working-directory: ./infra
-        run: npm run test:smoke
+      - name: Run smoke tests 🔥
+        working-directory: scripts
+        run: smoke-tests.sh
