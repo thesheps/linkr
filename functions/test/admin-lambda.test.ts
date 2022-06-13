@@ -49,7 +49,7 @@ describe("Admin Lambda", () => {
 			ExpressionAttributeValues: { ":shortUrl": { S: expectedShortUrl } },
 			Key: { path: { S: "/entries" } },
 			TableName: proxyTable,
-			UpdateExpression: "SET shortUrl :shortUrl",
+			UpdateExpression: "SET shortUrl = :shortUrl",
 		});
 	});
 });

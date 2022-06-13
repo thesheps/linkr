@@ -21,7 +21,7 @@ export const handler = async function (event: any) {
 		.updateItem({
 			TableName: tableName,
 			Key: { path: { S: event.path } },
-			UpdateExpression: "SET shortUrl :shortUrl",
+			UpdateExpression: "SET shortUrl = :shortUrl",
 			ExpressionAttributeValues: { ":shortUrl": { S: shortUrl } },
 		})
 		.promise();
