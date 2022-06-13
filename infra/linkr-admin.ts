@@ -25,8 +25,8 @@ export class LinkrAdmin extends Construct {
 
 		const lambda = new Function(this, "Lambda", {
 			runtime: Runtime.NODEJS_12_X,
-			code: Code.fromAsset("build/admin-lambda"),
-			handler: "handler",
+			code: Code.fromAsset("../build"),
+			handler: "admin-lambda/handler",
 			functionName: "linkr-admin-handler",
 			environment: {
 				LINKR_PROXY_TABLE_NAME: props.table.tableName,

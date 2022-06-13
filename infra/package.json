@@ -3,26 +3,18 @@
 	"version": "0.1.0",
 	"scripts": {
 		"cdk": "env-cmd cdk",
-		"build": "tsc",
-		"postbuild": "cp package.json build/package.json && cd build && npm i --only=production",
-		"predeploy": "npm run build",
 		"deploy": "cdk deploy '*' --require-approval 'never'",
-		"pretest": "npm run build",
 		"test": "NODE_OPTIONS=--experimental-vm-modules jest",
 		"test:smoke": "./scripts/smoke-tests.sh"
 	},
 	"dependencies": {
 		"aws-cdk-lib": "^2.27.0",
 		"aws-sdk": "^2.1152.0",
-		"base62": "^2.0.1",
-		"constructs": "^10.1.35",
-		"md5": "^2.3.0"
+		"constructs": "^10.1.35"
 	},
 	"devDependencies": {
 		"@types/jest": "^26.0.20",
-		"@types/md5": "^2.3.2",
 		"@types/node": "14.14.20",
-		"@types/uuid": "^8.3.4",
 		"aws-cdk": "^2.27.0",
 		"env-cmd": "^10.1.0",
 		"jest": "^26.6.3",
