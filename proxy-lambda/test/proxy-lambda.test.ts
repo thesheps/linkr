@@ -1,4 +1,4 @@
-import { handler } from "../proxy-lambda";
+import { handler } from "../handler";
 
 jest.mock("aws-sdk");
 global.console.log = jest.fn();

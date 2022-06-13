@@ -4,6 +4,7 @@
 	"scripts": {
 		"cdk": "env-cmd cdk",
 		"build": "tsc",
+		"postbuild": "cp package.json build/package.json && cd build && npm i --only=production",
 		"predeploy": "npm run build",
 		"deploy": "cdk deploy '*' --require-approval 'never'",
 		"pretest": "npm run build",
