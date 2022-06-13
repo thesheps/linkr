@@ -12,8 +12,8 @@ describe("Proxy Lambda", () => {
 	const { DynamoDB } = require("aws-sdk");
 
 	beforeEach(() => {
-		process.env.PROXY_TABLE_NAME = proxyTable;
-		process.env.DEFAULT_REDIRECT = defaultRedirect;
+		process.env.LINKR_PROXY_TABLE_NAME = proxyTable;
+		process.env.LINKR_DEFAULT_REDIRECT = defaultRedirect;
 
 		DynamoDB.mockImplementation(() => ({
 			updateItem,
@@ -21,7 +21,7 @@ describe("Proxy Lambda", () => {
 	});
 
 	it("Throws an error when misconfigured", async () => {
-		delete process.env.PROXY_TABLE_NAME;
+		delete process.env.LINKR_PROXY_TABLE_NAME;
 		const response = await handler({});
 
 		expect(response).toEqual({
@@ -32,7 +32,7 @@ describe("Proxy Lambda", () => {
 	});
 
 	it("Throws an error when misconfigured", async () => {
-		delete process.env.DEFAULT_REDIRECT;
+		delete process.env.LINKR_DEFAULT_REDIRECT;
 		const response = await handler({});
 
 		expect(response).toEqual({

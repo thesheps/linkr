@@ -29,7 +29,7 @@ export class LinkrAdmin extends Construct {
 			handler: "admin-lambda.handler",
 			functionName: "linkr-admin-handler",
 			environment: {
-				PROXY_TABLE_NAME: props.table.tableName,
+				LINKR_PROXY_TABLE_NAME: props.table.tableName,
 			},
 		});
 

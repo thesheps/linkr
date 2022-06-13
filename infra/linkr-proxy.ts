@@ -24,8 +24,8 @@ export class LinkrProxy extends Construct {
 			handler: "proxy-lambda.handler",
 			functionName: "linkr-proxy-handler",
 			environment: {
-				PROXY_TABLE_NAME: props.table.tableName,
-				DEFAULT_REDIRECT: props.defaultRedirect,
+				LINKR_PROXY_TABLE_NAME: props.table.tableName,
+				LINKR_DEFAULT_REDIRECT: props.defaultRedirect,
 			},
 		});
 

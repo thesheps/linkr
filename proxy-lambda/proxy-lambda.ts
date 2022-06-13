@@ -3,8 +3,8 @@ import { DynamoDB } from "aws-sdk";
 export const handler = async function (event: any) {
 	console.log("request:", JSON.stringify(event, undefined, 2));
 
-	const tableName = process.env.PROXY_TABLE_NAME;
-	const defaultRedirect = process.env.DEFAULT_REDIRECT;
+	const tableName = process.env.LINKR_PROXY_TABLE_NAME;
+	const defaultRedirect = process.env.LINKR_DEFAULT_REDIRECT;
 
 	if (!defaultRedirect) return sendResponse(505, "Default redirect not found!");
 	if (!tableName) return sendResponse(505, "Proxy table not found!");
