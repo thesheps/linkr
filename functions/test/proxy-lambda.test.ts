@@ -53,7 +53,7 @@ describe("Proxy Lambda", () => {
 
 		expect(updateItem).toBeCalledWith({
 			ExpressionAttributeValues: { ":incr": { N: "1" } },
-			Key: { path: { S: "/beans" } },
+			Key: { shortUrl: { S: "/beans" } },
 			TableName: proxyTable,
 			UpdateExpression: "ADD hits :incr",
 		});
