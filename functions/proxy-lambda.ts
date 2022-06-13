@@ -14,7 +14,7 @@ export const handler = async function (event: any) {
 	await dynamo
 		.updateItem({
 			TableName: tableName,
-			Key: { path: { S: event.requestContext.path } },
+			Key: { path: { S: event.path } },
 			UpdateExpression: "ADD hits :incr",
 			ExpressionAttributeValues: { ":incr": { N: "1" } },
 		})

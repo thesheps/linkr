@@ -3,9 +3,17 @@ import { handler } from "../admin-lambda";
 jest.mock("aws-sdk");
 global.console.log = jest.fn();
 
+const updateItem = jest.fn().mockReturnValue({ promise: jest.fn() });
+const expectedShortUrl = "https://linkr.com/1A95TU";
 const proxyTable = "beans-on-toast";
 const proxyBaseDomain = "linkr.com";
-const updateItem = jest.fn().mockReturnValue({ promise: jest.fn() });
+const testEvent = {
+	httpMethod: "POST",
+	path: "/entries",
+	body: JSON.stringify({
+		longUrl: "https://www.big-url.com/my-lovely-path",
+	}),
+};
 
 describe("Admin Lambda", () => {
 	const { DynamoDB } = require("aws-sdk");
@@ -25,18 +33,23 @@ describe("Admin Lambda", () => {
 	});
 
 	it("Shortens a request successfully", async () => {
-		const response = await handler({
-			httpMethod: "POST",
-			path: "/entries",
-			body: JSON.stringify({
-				longUrl: "https://www.big-url.com/my-lovely-path",
-			}),
-		});
+		const response = await handler(testEvent);
 
 		expect(response).toEqual({
-			body: JSON.stringify({ shortUrl: "https://linkr.com/1A95TU" }),
+			body: JSON.stringify({ shortUrl: expectedShortUrl }),
 			headers: { "Content-Type": "application/json" },
 			statusCode: 200,
+		});
+	});
+
+	it("Updates the shortUrl for the specified path", async () => {
+		await handler(testEvent);
+
+		expect(updateItem).toBeCalledWith({
+			ExpressionAttributeValues: { ":shortUrl": { S: expectedShortUrl } },
+			Key: { path: { S: "/entries" } },
+			TableName: proxyTable,
+			UpdateExpression: "SET shortUrl :shortUrl",
 		});
 	});
 });

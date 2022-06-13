@@ -1,3 +1,5 @@
+import { DynamoDB } from "aws-sdk";
+
 import shorten from "./shorten";
 
 export const handler = async function (event: any) {
@@ -13,6 +15,16 @@ export const handler = async function (event: any) {
 
 	const body = JSON.parse(event.body);
 	const shortUrl = shorten(body.longUrl, linkrDomain);
+	const dynamo = new DynamoDB();
+
+	await dynamo
+		.updateItem({
+			TableName: tableName,
+			Key: { path: { S: event.path } },
+			UpdateExpression: "SET shortUrl :shortUrl",
+			ExpressionAttributeValues: { ":shortUrl": { S: shortUrl } },
+		})
+		.promise();
 
 	return {
 		body: JSON.stringify({ shortUrl }),

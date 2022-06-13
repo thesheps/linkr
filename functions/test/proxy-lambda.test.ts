@@ -3,10 +3,10 @@ import { handler } from "../proxy-lambda";
 jest.mock("aws-sdk");
 global.console.log = jest.fn();
 
+const updateItem = jest.fn().mockReturnValue({ promise: jest.fn() });
 const proxyTable = "beans-on-toast";
 const defaultRedirect = "default-redirect.com";
-const testEvent = { requestContext: { path: "/beans" } };
-const updateItem = jest.fn().mockReturnValue({ promise: jest.fn() });
+const testEvent = { path: "/beans" };
 
 describe("Proxy Lambda", () => {
 	const { DynamoDB } = require("aws-sdk");
@@ -20,7 +20,7 @@ describe("Proxy Lambda", () => {
 		}));
 	});
 
-	it("Throws an error when misconfigured", async () => {
+	it("Throws an error when proxy table not configured", async () => {
 		delete process.env.LINKR_PROXY_TABLE_NAME;
 		const response = await handler({});
 
@@ -31,7 +31,7 @@ describe("Proxy Lambda", () => {
 		});
 	});
 
-	it("Throws an error when misconfigured", async () => {
+	it("Throws an error when default redirect not configured", async () => {
 		delete process.env.LINKR_DEFAULT_REDIRECT;
 		const response = await handler({});
 
