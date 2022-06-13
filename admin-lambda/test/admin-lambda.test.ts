@@ -4,7 +4,7 @@ jest.mock("aws-sdk");
 global.console.log = jest.fn();
 
 const proxyTable = "beans-on-toast";
-const proxyBaseUrl = "https://linkr.com";
+const proxyBaseDomain = "linkr.com";
 const updateItem = jest.fn().mockReturnValue({ promise: jest.fn() });
 
 describe("Admin Lambda", () => {
@@ -12,7 +12,7 @@ describe("Admin Lambda", () => {
 
 	beforeEach(() => {
 		process.env.LINKR_PROXY_TABLE_NAME = proxyTable;
-		process.env.LINKR_PROXY_BASE_URL = proxyBaseUrl;
+		process.env.LINKR_DOMAIN = proxyBaseDomain;
 		DynamoDB.mockImplementation(() => ({ updateItem }));
 	});
 
