@@ -1,4 +1,4 @@
-import { handler } from "../handler";
+import { handler } from "../admin-lambda";
 
 jest.mock("aws-sdk");
 global.console.log = jest.fn();

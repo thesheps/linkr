@@ -73,6 +73,11 @@ describe("Configured environment", () => {
 			template.hasResourceProperties("AWS::Lambda::Function", {
 				Handler: "proxy-lambda.handler",
 				Runtime: "nodejs12.x",
+				Environment: {
+					Variables: {
+						LINKR_DEFAULT_REDIRECT: "https://www.linkr.com",
+					},
+				},
 			});
 		});
 

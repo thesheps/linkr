@@ -30,6 +30,7 @@ export class LinkrAdmin extends Construct {
 			functionName: "linkr-admin-handler",
 			environment: {
 				LINKR_PROXY_TABLE_NAME: props.table.tableName,
+				LINKR_DOMAIN: props.linkrDomainName,
 			},
 		});
 

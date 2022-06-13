@@ -23,13 +23,10 @@
     "typeRoots": [
       "./node_modules/@types"
     ],
-    "outDir": "build",
     "rootDir": ".",
   },
   "exclude": [
     "cdk.out",
-    "infra",
-    "build",
-    "**/test"
+    "test"
   ]
 }
