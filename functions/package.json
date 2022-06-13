@@ -3,7 +3,7 @@
 	"version": "0.1.0",
 	"scripts": {
 		"build": "tsc",
-		"postbuild": "cp package.json ../build/package.json && cd ../build && npm i --production",
+		"postbuild": "cp package.json ../build/package.json && cd ../build && npm i --omit=dev",
 		"pretest": "npm run build",
 		"test": "NODE_OPTIONS=--experimental-vm-modules jest"
 	},
