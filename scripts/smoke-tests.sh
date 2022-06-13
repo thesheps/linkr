@@ -9,4 +9,5 @@ smoke_url_ok "https://$LINKR_DOMAIN"
 # Admin url
 API_KEY=$(aws secretsmanager get-secret-value --secret-id linkr-api-key | jq ".SecretString | fromjson | .key" -r)
 smoke_header "x-api-key: $API_KEY"
-smoke_url_ok "https://api.$LINKR_DOMAIN"
+smoke_form_ok "https://api.$LINKR_DOMAIN/entries" "$SCRIPT_DIR/test-url"
+smoke_assert_body '{"shortUrl":"https://sheps.link/1z6bGk"}'
