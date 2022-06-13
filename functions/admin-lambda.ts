@@ -10,11 +10,8 @@ export const handler = async function (event: any) {
 	const tableName = process.env.LINKR_PROXY_TABLE_NAME;
 	if (!tableName) return sendResponse(505, "Proxy table not found!");
 
-	const linkrDomain = process.env.LINKR_DOMAIN;
-	if (!linkrDomain) return sendResponse(505, "Base URL not found!");
-
 	const body = JSON.parse(event.body);
-	const shortUrl = shorten(body.longUrl, linkrDomain);
+	const shortUrl = shorten(body.longUrl);
 	const dynamo = new DynamoDB();
 
 	await dynamo

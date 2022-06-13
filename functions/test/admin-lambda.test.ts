@@ -4,10 +4,9 @@ jest.mock("aws-sdk");
 global.console.log = jest.fn();
 
 const putItem = jest.fn().mockReturnValue({ promise: jest.fn() });
-const expectedShortUrl = "https://linkr.com/1A95TU";
+const expectedShortUrl = "/1A95TU";
 const longUrl = "https://www.big-url.com/my-lovely-path";
 const proxyTable = "beans-on-toast";
-const proxyBaseDomain = "linkr.com";
 const testEvent = {
 	httpMethod: "POST",
 	path: "/entries",
@@ -21,7 +20,6 @@ describe("Admin Lambda", () => {
 
 	beforeEach(() => {
 		process.env.LINKR_PROXY_TABLE_NAME = proxyTable;
-		process.env.LINKR_DOMAIN = proxyBaseDomain;
 		DynamoDB.mockImplementation(() => ({ putItem }));
 	});
 
