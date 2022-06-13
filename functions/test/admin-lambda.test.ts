@@ -3,7 +3,7 @@ import { handler } from "../admin-lambda";
 jest.mock("aws-sdk");
 global.console.log = jest.fn();
 
-const updateItem = jest.fn().mockReturnValue({ promise: jest.fn() });
+const putItem = jest.fn().mockReturnValue({ promise: jest.fn() });
 const expectedShortUrl = "https://linkr.com/1A95TU";
 const longUrl = "https://www.big-url.com/my-lovely-path";
 const proxyTable = "beans-on-toast";
@@ -22,7 +22,7 @@ describe("Admin Lambda", () => {
 	beforeEach(() => {
 		process.env.LINKR_PROXY_TABLE_NAME = proxyTable;
 		process.env.LINKR_DOMAIN = proxyBaseDomain;
-		DynamoDB.mockImplementation(() => ({ updateItem }));
+		DynamoDB.mockImplementation(() => ({ putItem }));
 	});
 
 	it("Returns 404 if path not provided", async () => {
@@ -46,11 +46,12 @@ describe("Admin Lambda", () => {
 	it("Updates the shortUrl for the specified path", async () => {
 		await handler(testEvent);
 
-		expect(updateItem).toBeCalledWith({
-			ExpressionAttributeValues: { ":longUrl": { S: longUrl } },
-			Key: { shortUrl: { S: expectedShortUrl } },
+		expect(putItem).toBeCalledWith({
 			TableName: proxyTable,
-			UpdateExpression: "SET longUrl = :longUrl",
+			Item: {
+				shortUrl: { S: expectedShortUrl },
+				longUrl: { S: longUrl },
+			},
 		});
 	});
 });

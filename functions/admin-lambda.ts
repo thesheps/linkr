@@ -18,11 +18,12 @@ export const handler = async function (event: any) {
 	const dynamo = new DynamoDB();
 
 	await dynamo
-		.updateItem({
+		.putItem({
 			TableName: tableName,
-			Key: { shortUrl: { S: shortUrl } },
-			UpdateExpression: "SET longUrl = :longUrl",
-			ExpressionAttributeValues: { ":longUrl": { S: body.longUrl } },
+			Item: {
+				shortUrl: { S: shortUrl },
+				longUrl: { S: body.longUrl },
+			},
 		})
 		.promise();
 
