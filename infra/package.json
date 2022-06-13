@@ -4,8 +4,7 @@
 	"scripts": {
 		"cdk": "env-cmd cdk",
 		"deploy": "cdk deploy '*' --require-approval 'never'",
-		"test": "NODE_OPTIONS=--experimental-vm-modules jest",
-		"test:smoke": "./scripts/smoke-tests.sh"
+		"test": "NODE_OPTIONS=--experimental-vm-modules jest"
 	},
 	"dependencies": {
 		"aws-cdk-lib": "^2.27.0",
