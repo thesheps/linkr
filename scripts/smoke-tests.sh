@@ -1,7 +1,7 @@
 #! /bin/bash
 
 # Test constants
-SHORT_URL="https://sheps.link/1z6bGk"
+SHORT_URL="/sR6SA"
 
 # Import smoke.sh library
 SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]:-$0}"; )" &> /dev/null && pwd 2> /dev/null; )";
@@ -15,4 +15,4 @@ smoke_assert_body "{\"shortUrl\":\"$SHORT_URL\"}"
 
 # Smoke proxy api
 smoke_url_ok "https://$LINKR_DOMAIN"
-smoke_url_ok "$SHORT_URL"
+smoke_url_ok "https://sheps.link$SHORT_URL"
