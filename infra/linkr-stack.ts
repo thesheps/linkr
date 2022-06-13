@@ -32,7 +32,7 @@ export class LinkrStack extends Stack {
 		});
 
 		const table = new Table(this, "DynamoTable", {
-			partitionKey: { name: "path", type: AttributeType.STRING },
+			partitionKey: { name: "shortUrl", type: AttributeType.STRING },
 			tableName: "linkr-entries",
 		});
 

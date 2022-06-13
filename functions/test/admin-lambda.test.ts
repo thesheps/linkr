@@ -5,13 +5,14 @@ global.console.log = jest.fn();
 
 const updateItem = jest.fn().mockReturnValue({ promise: jest.fn() });
 const expectedShortUrl = "https://linkr.com/1A95TU";
+const longUrl = "https://www.big-url.com/my-lovely-path";
 const proxyTable = "beans-on-toast";
 const proxyBaseDomain = "linkr.com";
 const testEvent = {
 	httpMethod: "POST",
 	path: "/entries",
 	body: JSON.stringify({
-		longUrl: "https://www.big-url.com/my-lovely-path",
+		longUrl,
 	}),
 };
 
@@ -46,10 +47,10 @@ describe("Admin Lambda", () => {
 		await handler(testEvent);
 
 		expect(updateItem).toBeCalledWith({
-			ExpressionAttributeValues: { ":shortUrl": { S: expectedShortUrl } },
-			Key: { path: { S: "/entries" } },
+			ExpressionAttributeValues: { ":longUrl": { S: longUrl } },
+			Key: { shortUrl: { S: expectedShortUrl } },
 			TableName: proxyTable,
-			UpdateExpression: "SET shortUrl = :shortUrl",
+			UpdateExpression: "SET longUrl = :longUrl",
 		});
 	});
 });

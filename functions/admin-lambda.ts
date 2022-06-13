@@ -20,9 +20,9 @@ export const handler = async function (event: any) {
 	await dynamo
 		.updateItem({
 			TableName: tableName,
-			Key: { path: { S: event.path } },
-			UpdateExpression: "SET shortUrl = :shortUrl",
-			ExpressionAttributeValues: { ":shortUrl": { S: shortUrl } },
+			Key: { shortUrl: { S: shortUrl } },
+			UpdateExpression: "SET longUrl = :longUrl",
+			ExpressionAttributeValues: { ":longUrl": { S: body.longUrl } },
 		})
 		.promise();
 

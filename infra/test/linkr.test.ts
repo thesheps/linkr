@@ -16,13 +16,13 @@ describe("Configured environment", () => {
 		template.hasResourceProperties("AWS::DynamoDB::Table", {
 			KeySchema: [
 				{
-					AttributeName: "path",
+					AttributeName: "shortUrl",
 					KeyType: "HASH",
 				},
 			],
 			AttributeDefinitions: [
 				{
-					AttributeName: "path",
+					AttributeName: "shortUrl",
 					AttributeType: "S",
 				},
 			],
